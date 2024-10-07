@@ -1,7 +1,6 @@
 const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require("@apollo/server/standalone");
-const { v1: uuid } = require("uuid")
-
+const { v1: uuid } = require("uuid");
 
 let authors = [
   {
@@ -132,9 +131,13 @@ const resolvers = {
       if (args.author)
         return books.filter((book) => book.author === args.author);
       if (args.genre)
-        return books.filter(book => book.genres.includes(args.author.genre))
+        return books.filter((book) => book.genres.includes(args.author.genre));
       if (args.author && args.genre)
-        return books.filter(book => ((book.author === args.author) && book.author.genres.includes(args.genre)))
+        return books.filter(
+          (book) =>
+            book.author === args.author &&
+            book.author.genres.includes(args.genre),
+        );
       return books;
     },
     allAuthors: () => authors,
@@ -145,24 +148,26 @@ const resolvers = {
   },
   Mutation: {
     addBook: (root, args) => {
-      const book = { ...args, id: uuid() }
-      books = books.concat(book)
+      const book = { ...args, id: uuid() };
+      books = books.concat(book);
       if (!authors.includes(args.author)) {
-        authors = authors.concat({ name: args.author, id: uuid() })
+        authors = authors.concat({ name: args.author, id: uuid() });
       }
-      return book
+      return book;
     },
     editAuthor: (root, args) => {
-      const author = authors.find(author => author.name === args.name)
-      if (!author) return null
+      const author = authors.find((author) => author.name === args.name);
+      if (!author) return null;
 
-      const editedAuthor = { ...author, born: args.setBornTo }
+      const editedAuthor = { ...author, born: args.setBornTo };
 
-      authors = authors.map(author => author.name === args.name ? editedAuthor : author)
+      authors = authors.map((author) =>
+        author.name === args.name ? editedAuthor : author,
+      );
 
-      return editedAuthor
-    }
-  }
+      return editedAuthor;
+    },
+  },
 };
 
 const server = new ApolloServer({
