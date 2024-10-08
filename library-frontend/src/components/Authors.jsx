@@ -7,12 +7,12 @@ const Authors = (props) => {
     return null;
   }
 
-  // NOTICE that authors state is managed by Apollo Client.
-  const authors = result.data.allAuthors;
-
   if (result.loading) {
     return <div>Loading...</div>;
   }
+
+  // NOTICE that authors state is managed by Apollo Client.
+  const authors = result.data.allAuthors;
 
   return (
     <div>
