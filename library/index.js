@@ -164,7 +164,6 @@ const resolvers = {
       authors = authors.map((author) =>
         author.name === args.name ? editedAuthor : author,
       );
-
       return editedAuthor;
     },
   },
