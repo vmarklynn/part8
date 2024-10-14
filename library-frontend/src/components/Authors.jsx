@@ -17,15 +17,15 @@ const Authors = (props) => {
     return <div>Loading...</div>;
   }
 
+  // NOTICE that authors state is managed by Apollo Client.
+  const authors = result.data.allAuthors;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     editAuthor({ variables: { name, setBornTo: parseInt(year) } });
-    setName("");
+    setName(authors[0].name);
     setYear("");
   };
-
-  // NOTICE that authors state is managed by Apollo Client.
-  const authors = result.data.allAuthors;
 
   return (
     <div>
